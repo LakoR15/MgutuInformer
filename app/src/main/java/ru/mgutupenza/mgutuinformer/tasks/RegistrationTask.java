@@ -1,5 +1,6 @@
 package ru.mgutupenza.mgutuinformer.tasks;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
@@ -22,6 +23,7 @@ public class RegistrationTask extends AsyncTask<Void, Void, String>{
     private AppCompatActivity activity;
     private Context context;
     private String name, groupsName, login, password;
+    ProgressDialog progressDialog;
 
     public RegistrationTask(AppCompatActivity activity, Context context, String name, String groupsName, String login, String password) {
         this.activity =  activity;
@@ -34,7 +36,10 @@ public class RegistrationTask extends AsyncTask<Void, Void, String>{
 
     @Override
     protected void onPreExecute() {
-        super.onPreExecute();
+        progressDialog = new ProgressDialog(activity);
+        progressDialog.setMessage("Подключение");
+        progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+        progressDialog.show();
     }
 
     @Override
@@ -63,6 +68,7 @@ public class RegistrationTask extends AsyncTask<Void, Void, String>{
 
     @Override
     protected void onPostExecute(String s) {
+        progressDialog.dismiss();
         if (!s.equals("")){
             FileIO.saveString("CurrentUser", s, context);
             Toast.makeText(context, s, Toast.LENGTH_SHORT).show();
