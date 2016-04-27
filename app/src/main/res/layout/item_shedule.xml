@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:layout_marginTop="1dp"
+    android:padding="6dp">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="09.50 - 11.25"
+        android:textSize="18sp"
+        android:id="@+id/shedule_time"
+        android:layout_centerVertical="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_margin="8dp" />
+
+    <View
+        android:layout_width="4dp"
+        android:layout_height="wrap_content"
+        android:background="@android:color/holo_blue_light"
+        android:id="@+id/view"
+        android:layout_alignParentTop="true"
+        android:layout_toRightOf="@+id/shedule_time"
+        android:layout_alignBottom="@+id/linearLayout2" />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="5"
+        android:orientation="vertical"
+        android:id="@+id/linearLayout2"
+        android:layout_alignParentTop="true"
+        android:layout_toRightOf="@+id/view"
+        android:layout_toEndOf="@+id/view"
+        android:padding="5dp"
+        android:layout_marginLeft="8dp">
+
+        <TextView
+            android:id="@+id/shedule_classroom"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="1-103"
+            android:textSize="@dimen/shedule_text_size" />
+
+        <TextView
+            android:id="@+id/shedule_subject"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Практика"
+            android:textSize="@dimen/shedule_text_size" />
+
+        <TextView
+            android:id="@+id/shedule_subject_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Правоведение"
+            android:textSize="@dimen/shedule_text_size" />
+
+        <TextView
+            android:id="@+id/shedule_teacher"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Маслова Ирина Ивановна"
+            android:textSize="@dimen/shedule_text_size" />
+
+    </LinearLayout>
+
+</RelativeLayout>
