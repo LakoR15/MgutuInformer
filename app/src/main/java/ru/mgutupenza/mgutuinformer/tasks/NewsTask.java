@@ -39,39 +39,6 @@ public class NewsTask extends AsyncTask<Void, Void, String> {
 
     @Override
     protected String doInBackground(Void... params) {
-//        BufferedReader reader = null;
-//
-//        try {
-//
-//            URL url = new URL("https://api.vk.com/method/wall.get?domain=mgutupkit&offset=0&count=100&filter=all&extended=1&version=5.42");
-//            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-//            connection.setRequestMethod("GET");
-//            connection.connect();
-//            reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
-//            StringBuilder buf = new StringBuilder();
-//            String line;
-//            while ((line = reader.readLine()) != null) {
-//                buf.append(line);
-//            }
-//            return buf.toString();
-//        } catch (UnknownHostException e) {
-//            e.printStackTrace();
-//            Log.e("NewsTask", "Error availability server " + e.getMessage());
-//            return "";
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//            Log.e("NewsTask", "Error reading data " + e.getMessage());
-//            return "";
-//        } finally {
-//            if (reader != null)
-//                try {
-//                    reader.close();
-//                } catch (IOException e) {
-//                    e.printStackTrace();
-//                    Log.e("NewsTask", "Error close reader " + e.getMessage());
-//                }
-//        }
-
         OkHttpClient client = new OkHttpClient();
         Request request = new Request.Builder()
                 .url("https://api.vk.com/method/wall.get?domain=mgutupkit&offset=0&count=100&filter=all&extended=1&version=5.42")

@@ -1,19 +1,27 @@
 package ru.mgutupenza.mgutuinformer.fragments;
 
+import android.content.Context;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
 import ru.mgutupenza.mgutuinformer.R;
 import ru.mgutupenza.mgutuinformer.adapters.NewsRVAdapter;
 import ru.mgutupenza.mgutuinformer.model.vk.Post;
@@ -24,12 +32,10 @@ import ru.mgutupenza.mgutuinformer.utils.VkResponseParser;
 public class NewsFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener {
 
     public static final String TAG = "NewsFragment";
-
     private List<Post> posts = new ArrayList<>();
-
     private SwipeRefreshLayout swipeRefreshLayout;
-
     private NewsRVAdapter adapter;
+    private ProgressBar progressBar;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -56,9 +62,8 @@ public class NewsFragment extends Fragment implements SwipeRefreshLayout.OnRefre
                 android.R.color.holo_green_light,
                 android.R.color.holo_orange_light,
                 android.R.color.holo_red_light);
-
+        progressBar = (ProgressBar)view.findViewById(R.id.progress_bar);
         updatePosts();
-
         return view;
 
     }
@@ -70,24 +75,57 @@ public class NewsFragment extends Fragment implements SwipeRefreshLayout.OnRefre
 
     @Override
     public void onRefresh() {
+        updatePosts();
+    }
+
+    public void updatePosts() {
         swipeRefreshLayout.setRefreshing(true);
-        NewsTask task = new NewsTask(getContext(), swipeRefreshLayout);
+        NewsTask task = new NewsTask();
         task.execute();
     }
 
-    public void updatePosts(){
-        swipeRefreshLayout.setRefreshing(true);
-        NewsTask task = new NewsTask(getContext(), swipeRefreshLayout);
-        task.execute();
-//TODO сделать ожидание завершения таска
-        String news = FileIO.openString("News", getContext());
+    private class NewsTask extends AsyncTask<Void, Void, String> {
 
-        if (!news.equals("")) {
-            VkResponseParser vkResponseParser = new VkResponseParser(news);
-            posts.addAll(vkResponseParser.getPosts());
-            adapter.notifyDataSetChanged();
-        } else {
-            Toast.makeText(getActivity().getApplicationContext(), "Проверьте соединение с интернетом", Toast.LENGTH_SHORT).show();
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
         }
+
+        @Override
+        protected String doInBackground(Void... params) {
+            OkHttpClient client = new OkHttpClient();
+            Request request = new Request.Builder()
+                    .url("https://api.vk.com/method/wall.get?domain=mgutupkit&offset=0&count=100&filter=all&extended=1&version=5.42")
+                    .build();
+
+            try {
+                Response response = client.newCall(request).execute();
+                return response.body().string();
+            } catch (IOException e) {
+                e.printStackTrace();
+                Log.e("NewsTask", "Error availability server " + e.getMessage());
+                return "";
+            }
+        }
+
+        @Override
+        protected void onPostExecute(String s) {
+            super.onPostExecute(s);
+            if (!s.equals("")) {
+                VkResponseParser vkResponseParser = new VkResponseParser(s);
+                posts.addAll(vkResponseParser.getPosts());
+                adapter.notifyDataSetChanged();
+                FileIO.saveString("News", s, getContext());
+            } else {
+                VkResponseParser vkResponseParser = new VkResponseParser(FileIO.openString("News", getContext()));
+                posts.addAll(vkResponseParser.getPosts());
+                adapter.notifyDataSetChanged();
+                Toast.makeText(getActivity().getApplicationContext(), "Проверьте соединение с интернетом", Toast.LENGTH_SHORT).show();
+            }
+            progressBar.setVisibility(View.GONE);
+            swipeRefreshLayout.setVisibility(View.VISIBLE);
+            swipeRefreshLayout.setRefreshing(false);
+        }
+
     }
 }
