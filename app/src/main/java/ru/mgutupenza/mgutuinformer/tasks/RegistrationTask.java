@@ -76,6 +76,7 @@ public class RegistrationTask extends AsyncTask<Void, Void, String>{
     protected void onPostExecute(String s) {
         progressDialog.dismiss();
         if (!s.equals("")){
+            //TODO заменить данные пользователя на данные с сервера
             java.lang.reflect.Type type = new TypeToken<Map<String, String>>(){}.getType();
             Map<String, String> result = new Gson().fromJson(s, type);
             Users users = new Users();
