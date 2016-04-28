@@ -56,6 +56,8 @@ public class MainActivity extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
         View header = navigationView.getHeaderView(0);
+        Menu menu = navigationView.getMenu();
+        MenuItem menuItem = menu.findItem(R.id.menu_sign_in_up);
         TextView userName = (TextView) header.findViewById(R.id.user_name);
         TextView group = (TextView) header.findViewById(R.id.group);
         try {
@@ -63,7 +65,8 @@ public class MainActivity extends AppCompatActivity
             users = new Gson().fromJson(json, Users.class);
             userName.setText(users.getName());
             group.setText(users.getGroups().getGroupsName());
-        }catch (RuntimeException ex){
+            menuItem.setVisible(false);
+        }catch (Exception ex){
             ex.printStackTrace();
             Log.e(TAG, "User not found");
         }
