@@ -16,6 +16,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -69,7 +70,9 @@ public class MainActivity extends AppCompatActivity
             group.setText(users.getGroups().getGroupsName());
             signIn.setVisible(false);
             signOut.setVisible(true);
+
         }catch (Exception ex){
+//            Toast.makeText(getApplicationContext(), "Вход не выполнен", Toast.LENGTH_SHORT).show();
             ex.printStackTrace();
             Log.e(TAG, "User not found");
         }
