@@ -37,6 +37,11 @@
             android:title="Регистрация/Вход"
             android:icon="@drawable/ic_auth"/>
 
+        <item
+            android:id="@+id/menu_sign_out"
+            android:title="Выход"
+            android:visible="false"/>
+
     </group>
 </menu>
 

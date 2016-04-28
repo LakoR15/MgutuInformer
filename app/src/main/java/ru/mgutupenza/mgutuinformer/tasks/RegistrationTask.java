@@ -76,17 +76,8 @@ public class RegistrationTask extends AsyncTask<Void, Void, String>{
     protected void onPostExecute(String s) {
         progressDialog.dismiss();
         if (!s.equals("")){
-            //TODO заменить данные пользователя на данные с сервера
-            java.lang.reflect.Type type = new TypeToken<Map<String, String>>(){}.getType();
-            Map<String, String> result = new Gson().fromJson(s, type);
-            Users users = new Users();
-//            users.setId(Long.valueOf(result.get("usersId")));
-            users.setName(name);
-            users.setGroups(new Groups(groupsName));
-            users.setSecretKey(result.get("secretKey"));
-            String user = new Gson().toJson(users);
-            FileIO.saveString("CurrentUser", user, context);
-            Toast.makeText(context, s, Toast.LENGTH_SHORT).show();
+            FileIO.saveString("CurrentUser", s, context);
+//            Toast.makeText(context, s, Toast.LENGTH_SHORT).show();
             if(activity != null){
                 activity.startActivity(new Intent(activity, MainActivity.class));
                 activity.finish();

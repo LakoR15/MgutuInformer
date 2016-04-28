@@ -68,7 +68,7 @@ public class LoginTask extends AsyncTask<Void, Void, String> {
         progressDialog.dismiss();
         if (!s.equals("")){
             FileIO.saveString("CurrentUser", s, context);
-            Toast.makeText(context, s, Toast.LENGTH_SHORT).show();
+//            Toast.makeText(context, s, Toast.LENGTH_SHORT).show();
             if(activity != null){
                 activity.startActivity(new Intent(activity, MainActivity.class));
                 activity.finish();

@@ -38,6 +38,8 @@ public class MainActivity extends AppCompatActivity
     private FragmentTransaction fragmentTransaction;
     private FragmentManager fragmentManager;
     private Users users;
+    private MenuItem signIn, signOut;
+    private TextView userName, group;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,15 +59,16 @@ public class MainActivity extends AppCompatActivity
         navigationView.setNavigationItemSelectedListener(this);
         View header = navigationView.getHeaderView(0);
         Menu menu = navigationView.getMenu();
-        MenuItem menuItem = menu.findItem(R.id.menu_sign_in_up);
-        TextView userName = (TextView) header.findViewById(R.id.user_name);
-        TextView group = (TextView) header.findViewById(R.id.group);
+        signIn = menu.findItem(R.id.menu_sign_in_up);
+        signOut = menu.findItem(R.id.menu_sign_out);
+        userName = (TextView) header.findViewById(R.id.user_name);
+        group = (TextView) header.findViewById(R.id.group);
         try {
-            String json = FileIO.openString("CurrentUser", getApplicationContext());
-            users = new Gson().fromJson(json, Users.class);
+            users = new Gson().fromJson(FileIO.openString("CurrentUser", getApplicationContext()), Users.class);
             userName.setText(users.getName());
             group.setText(users.getGroups().getGroupsName());
-            menuItem.setVisible(false);
+            signIn.setVisible(false);
+            signOut.setVisible(true);
         }catch (Exception ex){
             ex.printStackTrace();
             Log.e(TAG, "User not found");
@@ -115,8 +118,14 @@ public class MainActivity extends AppCompatActivity
 
             fragmentTransaction.replace(R.id.container, sheduleFragment, SheduleFragment.TAG);
 
-        } else if(id == R.id.menu_sign_in_up){
+        } else if(id == R.id.menu_sign_in_up) {
             startActivity(new Intent(this, StartActivity.class));
+        } else if(id == R.id.menu_sign_out) {
+            signIn.setVisible(true);
+            signOut.setVisible(false);
+            userName.setText("");
+            group.setText("");
+            FileIO.saveString("CurrentUser", "", getApplicationContext());
 //        } else if (id == R.id.nav_im) {
 //
 //        } else if (id == R.id.nav_group) {
