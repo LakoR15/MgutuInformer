@@ -11,13 +11,21 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.TextView;
+
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
 import java.io.File;
+import java.lang.reflect.Type;
 
 import ru.mgutupenza.mgutuinformer.fragments.NewsFragment;
 import ru.mgutupenza.mgutuinformer.fragments.SheduleFragment;
+import ru.mgutupenza.mgutuinformer.model.server.Users;
 import ru.mgutupenza.mgutuinformer.utils.FileIO;
 
 public class MainActivity extends AppCompatActivity
@@ -25,10 +33,11 @@ public class MainActivity extends AppCompatActivity
 
     public static final String TAG = "Main Activity";
 
-    NewsFragment newsFragment;
-    SheduleFragment sheduleFragment;
-    FragmentTransaction fragmentTransaction;
-    FragmentManager fragmentManager;
+    private NewsFragment newsFragment;
+    private SheduleFragment sheduleFragment;
+    private FragmentTransaction fragmentTransaction;
+    private FragmentManager fragmentManager;
+    private Users users;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,7 +55,18 @@ public class MainActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
-
+        View header = navigationView.getHeaderView(0);
+        TextView userName = (TextView) header.findViewById(R.id.user_name);
+        TextView group = (TextView) header.findViewById(R.id.group);
+        try {
+            String json = FileIO.openString("CurrentUser", getApplicationContext());
+            users = new Gson().fromJson(json, Users.class);
+            userName.setText(users.getName());
+            group.setText(users.getGroups().getGroupsName());
+        }catch (RuntimeException ex){
+            ex.printStackTrace();
+            Log.e(TAG, "User not found");
+        }
 
         newsFragment = new NewsFragment();
         sheduleFragment = new SheduleFragment();
@@ -56,6 +76,8 @@ public class MainActivity extends AppCompatActivity
             fragmentTransaction.replace(R.id.container, newsFragment, NewsFragment.TAG);
         }
         fragmentTransaction.commit();
+
+
     }
 
     @Override

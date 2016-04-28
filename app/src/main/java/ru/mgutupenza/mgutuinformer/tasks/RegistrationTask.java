@@ -8,7 +8,11 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+
 import java.io.IOException;
+import java.util.Map;
 
 import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
@@ -16,6 +20,8 @@ import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
 import ru.mgutupenza.mgutuinformer.MainActivity;
+import ru.mgutupenza.mgutuinformer.model.server.Groups;
+import ru.mgutupenza.mgutuinformer.model.server.Users;
 import ru.mgutupenza.mgutuinformer.utils.FileIO;
 
 public class RegistrationTask extends AsyncTask<Void, Void, String>{
@@ -70,7 +76,15 @@ public class RegistrationTask extends AsyncTask<Void, Void, String>{
     protected void onPostExecute(String s) {
         progressDialog.dismiss();
         if (!s.equals("")){
-            FileIO.saveString("CurrentUser", s, context);
+            java.lang.reflect.Type type = new TypeToken<Map<String, String>>(){}.getType();
+            Map<String, String> result = new Gson().fromJson(s, type);
+            Users users = new Users();
+//            users.setId(Long.valueOf(result.get("usersId")));
+            users.setName(name);
+            users.setGroups(new Groups(groupsName));
+            users.setSecretKey(result.get("secretKey"));
+            String user = new Gson().toJson(users);
+            FileIO.saveString("CurrentUser", user, context);
             Toast.makeText(context, s, Toast.LENGTH_SHORT).show();
             if(activity != null){
                 activity.startActivity(new Intent(activity, MainActivity.class));
