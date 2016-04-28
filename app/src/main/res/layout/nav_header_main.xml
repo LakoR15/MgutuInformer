@@ -30,14 +30,12 @@
             android:id="@+id/user_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingTop="@dimen/nav_header_vertical_spacing"
-            android:text="@string/name"/>
+            android:paddingTop="@dimen/nav_header_vertical_spacing" />
 
         <TextView
             android:id="@+id/group"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="12ИС1" />
+            android:layout_height="wrap_content" />
 
     </LinearLayout>
 
