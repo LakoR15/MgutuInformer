@@ -24,6 +24,7 @@ import com.google.gson.reflect.TypeToken;
 import java.io.File;
 import java.lang.reflect.Type;
 
+import ru.mgutupenza.mgutuinformer.fragments.ChatFragment;
 import ru.mgutupenza.mgutuinformer.fragments.NewsFragment;
 import ru.mgutupenza.mgutuinformer.fragments.SheduleFragment;
 import ru.mgutupenza.mgutuinformer.model.server.Users;
@@ -36,6 +37,7 @@ public class MainActivity extends AppCompatActivity
 
     private NewsFragment newsFragment;
     private SheduleFragment sheduleFragment;
+    private ChatFragment chatFragment;
     private FragmentTransaction fragmentTransaction;
     private FragmentManager fragmentManager;
     private Users users;
@@ -79,6 +81,7 @@ public class MainActivity extends AppCompatActivity
 
         newsFragment = new NewsFragment();
         sheduleFragment = new SheduleFragment();
+        chatFragment = new ChatFragment();
         fragmentManager = getSupportFragmentManager();
         fragmentTransaction = fragmentManager.beginTransaction();
         if (savedInstanceState == null) {
@@ -123,13 +126,16 @@ public class MainActivity extends AppCompatActivity
 
         } else if(id == R.id.menu_sign_in_up) {
             startActivity(new Intent(this, StartActivity.class));
+
         } else if(id == R.id.menu_sign_out) {
             signIn.setVisible(true);
             signOut.setVisible(false);
             userName.setText("");
             group.setText("");
             FileIO.saveString("CurrentUser", "", getApplicationContext());
-//        } else if (id == R.id.nav_im) {
+
+        } else if (id == R.id.nav_im) {
+            fragmentTransaction.replace(R.id.container, chatFragment, ChatFragment.TAG);
 //
 //        } else if (id == R.id.nav_group) {
 //
