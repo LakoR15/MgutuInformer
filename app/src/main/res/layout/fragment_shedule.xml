@@ -1,9 +1,18 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context="ru.mgutupenza.mgutuinformer.fragments.SheduleFragment">
+
+    <ProgressBar
+        android:id="@+id/progress_bar_schedule"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true"
+        android:visibility="visible"/>
 
     <LinearLayout
         android:id="@+id/change_group_layout"
@@ -12,7 +21,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:visibility="visible">
+        android:visibility="gone"
+        android:layout_above="@+id/progress_bar_schedule"
+        android:layout_centerHorizontal="true">
 
         <TextView
             android:layout_width="wrap_content"
@@ -21,13 +32,13 @@
             android:textSize="20sp" />
 
         <Spinner
+            android:id="@+id/group_spinner"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:entries="@array/catlist" />
+            android:layout_height="wrap_content" />
 
         <Button
             android:id="@+id/apply_change_group_button"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="OK"/>
 
@@ -39,7 +50,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         xmlns:app="http://schemas.android.com/apk/res-auto"
-        android:visibility="visible">
+        android:visibility="gone">
 
         <android.support.v4.view.ViewPager
             android:id="@+id/viewPager"
@@ -49,4 +60,4 @@
 
     </LinearLayout>
 
-</LinearLayout>
+</RelativeLayout>

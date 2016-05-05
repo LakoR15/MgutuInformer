@@ -1,15 +1,17 @@
 package ru.mgutupenza.mgutuinformer.model.server;
 
-import java.util.Set;
-
 public class LessonTime {
 
     private Long lessonTimeId;
-    private String lessonTimeStart;
-    private String lessonTimeEnd;
-    private Set<Schedule> schedule;
+    private Double lessonTimeStart;
+    private Double lessonTimeEnd;
 
     public LessonTime() {
+    }
+
+    public LessonTime(Double lessonTimeStart, Double lessonTimeEnd) {
+        this.lessonTimeStart = lessonTimeStart;
+        this.lessonTimeEnd = lessonTimeEnd;
     }
 
     public Long getLessonTimeId() {
@@ -20,27 +22,19 @@ public class LessonTime {
         this.lessonTimeId = lessonTimeId;
     }
 
-    public String getLessonTimeStart() {
+    public Double getLessonTimeStart() {
         return lessonTimeStart;
     }
 
-    public void setLessonTimeStart(String lessonTimeStart) {
+    public void setLessonTimeStart(Double lessonTimeStart) {
         this.lessonTimeStart = lessonTimeStart;
     }
 
-    public String getLessonTimeEnd() {
+    public Double getLessonTimeEnd() {
         return lessonTimeEnd;
     }
 
-    public void setLessonTimeEnd(String lessonTimeEnd) {
+    public void setLessonTimeEnd(Double lessonTimeEnd) {
         this.lessonTimeEnd = lessonTimeEnd;
-    }
-
-    public Set<Schedule> getSchedule() {
-        return schedule;
-    }
-
-    public void setSchedule(Set<Schedule> schedule) {
-        this.schedule = schedule;
     }
 }

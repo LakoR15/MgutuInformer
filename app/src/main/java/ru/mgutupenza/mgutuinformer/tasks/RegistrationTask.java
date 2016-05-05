@@ -20,6 +20,7 @@ import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
 import ru.mgutupenza.mgutuinformer.MainActivity;
+import ru.mgutupenza.mgutuinformer.R;
 import ru.mgutupenza.mgutuinformer.model.server.Groups;
 import ru.mgutupenza.mgutuinformer.model.server.Users;
 import ru.mgutupenza.mgutuinformer.utils.FileIO;
@@ -54,7 +55,7 @@ public class RegistrationTask extends AsyncTask<Void, Void, String>{
         MediaType mediaType = MediaType.parse("application/x-www-form-urlencoded; charset=utf-8");
         RequestBody body = RequestBody.create(mediaType, "");
         Request request = new Request.Builder()
-                .url("http://mgutuinformer.herokuapp.com/users/registration?name="+ name +"&groupsName="+ groupsName +"&login="+ login +"&password="+password+"&student=TRUE")
+                .url(context.getString(R.string.URL) + "/api/users/registration?name="+ name +"&groupsName="+ groupsName +"&login="+ login +"&password="+password+"&student=TRUE")
                 .post(body)
                 .build();
         try {

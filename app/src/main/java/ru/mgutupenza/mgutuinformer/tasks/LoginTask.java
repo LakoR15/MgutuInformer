@@ -16,6 +16,7 @@ import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
 import ru.mgutupenza.mgutuinformer.MainActivity;
+import ru.mgutupenza.mgutuinformer.R;
 import ru.mgutupenza.mgutuinformer.utils.FileIO;
 
 public class LoginTask extends AsyncTask<Void, Void, String> {
@@ -46,7 +47,7 @@ public class LoginTask extends AsyncTask<Void, Void, String> {
         OkHttpClient client = new OkHttpClient();
         RequestBody body = RequestBody.create(mediaType, "");
         Request request = new Request.Builder()
-                .url("https://mgutuinformer.herokuapp.com/users/login?login="+ email +"&password="+ password)
+                .url(context.getString(R.string.URL) + "/api/users/login?login="+ email +"&password="+ password)
                 .post(body)
                 .build();
         try {
@@ -58,7 +59,7 @@ public class LoginTask extends AsyncTask<Void, Void, String> {
             }
         } catch (IOException e) {
             e.printStackTrace();
-            Log.e("RegistrationTask", "Error availability server " + e.getMessage());
+            Log.e("LoginTask", "Error availability server " + e.getMessage());
             return "";
         }
     }

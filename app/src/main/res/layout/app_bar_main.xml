@@ -24,7 +24,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:visibility="gone"
-                android:entries="@array/weeks"/>
+                android:entries="@array/weeks"
+                app:theme="@style/ThemeOverlay.AppCompat.Light" />
 
         </android.support.v7.widget.Toolbar>
 

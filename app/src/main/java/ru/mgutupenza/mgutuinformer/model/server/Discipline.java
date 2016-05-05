@@ -19,4 +19,11 @@ public class Discipline {
         this.disciplineId = disciplineId;
     }
 
+    public String getDisciplineName() {
+        return disciplineName;
+    }
+
+    public void setDisciplineName(String disciplineName) {
+        this.disciplineName = disciplineName;
+    }
 }

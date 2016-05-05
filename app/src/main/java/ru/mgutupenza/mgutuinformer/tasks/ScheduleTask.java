@@ -13,21 +13,19 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.UnknownHostException;
 
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
 import ru.mgutupenza.mgutuinformer.MainActivity;
+import ru.mgutupenza.mgutuinformer.R;
 import ru.mgutupenza.mgutuinformer.SplashScreenActivity;
 import ru.mgutupenza.mgutuinformer.utils.FileIO;
 
 public class ScheduleTask extends AsyncTask<Void, Void, String> {
 
-     private AppCompatActivity activity;
      private Context context;
 
     public ScheduleTask(Context context) {
-        this.context = context;
-    }
-
-    public ScheduleTask(AppCompatActivity activity, Context context) {
-        this.activity = activity;
         this.context = context;
     }
 
@@ -38,37 +36,17 @@ public class ScheduleTask extends AsyncTask<Void, Void, String> {
 
     @Override
     protected String doInBackground(Void... params) {
-        BufferedReader reader = null;
-
+        OkHttpClient client = new OkHttpClient();
+        Request request = new Request.Builder()
+                .url(context.getString(R.string.URL) + "/api/schedule.get")
+                .build();
         try {
-
-            URL url = new URL("https://mgutuinformer.herokuapp.com/schedule");
-            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-            connection.setRequestMethod("GET");
-            connection.connect();
-            reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
-            StringBuilder buf = new StringBuilder();
-            String line;
-            while ((line = reader.readLine()) != null) {
-                buf.append(line);
-            }
-            return buf.toString();
-        } catch (UnknownHostException e) {
+            Response response = client.newCall(request).execute();
+            return response.body().string();
+        } catch (IOException e) {
             e.printStackTrace();
             Log.e("ScheduleTask", "Error availability server " + e.getMessage());
             return "";
-        } catch (IOException e) {
-            e.printStackTrace();
-            Log.e("ScheduleTask", "Error reading data " + e.getMessage());
-            return "";
-        } finally {
-            if (reader != null)
-                try {
-                    reader.close();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                    Log.e("ScheduleTask", "Error close reader " + e.getMessage());
-                }
         }
     }
 
@@ -77,10 +55,6 @@ public class ScheduleTask extends AsyncTask<Void, Void, String> {
         super.onPostExecute(s);
         if (!s.equals("")) {
             FileIO.saveString("Schedule", s, context);
-        }
-        if (activity != null){
-            activity.startActivity(new Intent(activity, MainActivity.class));
-            activity.finish();
         }
 
     }

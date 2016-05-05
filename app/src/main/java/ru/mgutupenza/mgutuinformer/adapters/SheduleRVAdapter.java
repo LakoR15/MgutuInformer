@@ -11,14 +11,15 @@ import java.util.List;
 
 import ru.mgutupenza.mgutuinformer.R;
 import ru.mgutupenza.mgutuinformer.model.server.Schedule;
+import ru.mgutupenza.mgutuinformer.utils.Converter;
 
 public class SheduleRVAdapter extends RecyclerView.Adapter<SheduleRVAdapter.SheduleViewHolder> {
 
-    List<Schedule> shedules;
+    List<Schedule> schedules;
     Context context;
 
-    public SheduleRVAdapter(List<Schedule> shedules, Context context) {
-        this.shedules = shedules;
+    public SheduleRVAdapter(List<Schedule> schedules, Context context) {
+        this.schedules = schedules;
         this.context = context;
     }
 
@@ -31,25 +32,24 @@ public class SheduleRVAdapter extends RecyclerView.Adapter<SheduleRVAdapter.Shed
     @Override
     public void onBindViewHolder(SheduleViewHolder holder, int position) {
 
-//        String str = shedules.get(position).getTimeStart() + " - " + shedules.get(position).getTimeEnd();
-//
-//        holder.timeTextView.setText(str);
-//        holder.classroomTextView.setText(shedules.get(position).getClassroom());
-//        holder.subjectTextView.setText(shedules.get(position).getSubject());
-//        holder.nameSubjectTextView.setText(shedules.get(position).getSubjectName());
-//        holder.teacherTextView.setText(shedules.get(position).getTeacher());
-//        if (position % 2 == 0){
-//            holder.divider.setBackgroundColor(context.getResources().getColor(android.R.color.holo_orange_light));
-//        }else {
-//            holder.divider.setBackgroundColor(context.getResources().getColor(android.R.color.holo_blue_light));
-//        }
+//        String time = schedules.get(position).getLessonTime().getLessonTimeStart() + "-" +schedules.get(position).getLessonTime().getLessonTimeEnd();
+        holder.timeTextView.setText(Converter.toString(schedules.get(position).getLessonTime().getLessonTimeStart(), schedules.get(position).getLessonTime().getLessonTimeEnd()));
+        holder.classroomTextView.setText(schedules.get(position).getLectureHall().getLectureHallName());
+        holder.subjectTextView.setText(schedules.get(position).getEmploymentType().getEmploymentTypeName());
+        holder.nameSubjectTextView.setText(schedules.get(position).getDiscipline().getDisciplineName());
+        holder.teacherTextView.setText(schedules.get(position).getTeacher().getTeacherName());
+        if (position % 2 == 0){
+            holder.divider.setBackgroundColor(context.getResources().getColor(android.R.color.holo_orange_light));
+        }else {
+            holder.divider.setBackgroundColor(context.getResources().getColor(android.R.color.holo_blue_light));
+        }
 
 
     }
 
     @Override
     public int getItemCount() {
-        return shedules.size();
+        return schedules.size();
     }
 
     public static class SheduleViewHolder extends RecyclerView.ViewHolder {

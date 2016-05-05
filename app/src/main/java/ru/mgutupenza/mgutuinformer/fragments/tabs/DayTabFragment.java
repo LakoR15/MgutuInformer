@@ -18,7 +18,7 @@ import ru.mgutupenza.mgutuinformer.model.server.Schedule;
 public class DayTabFragment extends Fragment {
 
     private String dayOfTheWeek;
-    private List<Schedule> sheduleSubjects;
+    private List<Schedule> schedules;
 
     private RecyclerView recyclerView;
 
@@ -29,7 +29,7 @@ public class DayTabFragment extends Fragment {
         Bundle args = new Bundle();
         fragment.setArguments(args);
         fragment.setDayOfTheWeek(day);
-        fragment.setSheduleSubjects(sheduleSubjects);
+        fragment.setSchedules(sheduleSubjects);
 
         return fragment;
     }
@@ -48,18 +48,18 @@ public class DayTabFragment extends Fragment {
         recyclerView = (RecyclerView) view.findViewById(R.id.rv_shedule);
         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
         recyclerView.setLayoutManager(layoutManager);
-//        adapter = new SheduleRVAdapter(sheduleSubjects, getContext());
+        adapter = new SheduleRVAdapter(schedules, getContext());
         recyclerView.setAdapter(adapter);
 
         return view;
     }
 
-    public List<Schedule> getSheduleSubjects() {
-        return sheduleSubjects;
+    public List<Schedule> getSchedules() {
+        return schedules;
     }
 
-    public void setSheduleSubjects(List<Schedule> sheduleSubjects) {
-        this.sheduleSubjects = sheduleSubjects;
+    public void setSchedules(List<Schedule> schedules) {
+        this.schedules = schedules;
     }
 
     public String getDayOfTheWeek() {

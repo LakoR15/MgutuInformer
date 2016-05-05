@@ -13,10 +13,10 @@ public class SplashScreenActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash_screen);
 
-        NewsTask task = new NewsTask(getApplicationContext());
-        task.execute();
-        ScheduleTask task1 = new ScheduleTask(this, getApplicationContext());
-        task1.execute();
+//        NewsTask task = new NewsTask(getApplicationContext());
+//        task.execute();
+//        ScheduleTask task1 = new ScheduleTask(this, getApplicationContext());
+//        task1.execute();
     }
 
 }
