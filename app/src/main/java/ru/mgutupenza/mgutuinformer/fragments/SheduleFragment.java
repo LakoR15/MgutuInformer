@@ -16,6 +16,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.LinearLayout;
@@ -93,6 +94,21 @@ public class SheduleFragment extends Fragment {
 
             }
         });
+
+        spinnerWeekNumber.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                spinnerWeekNumber.getSelectedItem().toString();
+                adapter = new ScheduleTabFragmentAdapter(getContext(), getScheduleByWeek(getScheduleByGroup(schedules, spinnerGroup.getSelectedItem().toString()), spinnerWeekNumber.getSelectedItem().toString()));
+                viewPager.setAdapter(adapter);
+                adapter.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
         return v;
     }
 
@@ -148,6 +164,16 @@ public class SheduleFragment extends Fragment {
         return schedulesByGroup;
     }
 
+    private List<Schedule> getScheduleByWeek(List<Schedule> schedules, String week){
+        List<Schedule> schedulesByWeek = new ArrayList<>();
+        for (Schedule s: schedules){
+            if (s.getNumberWeekday().getName().equals(week)){
+                schedulesByWeek.add(s);
+            }
+        }
+        return schedulesByWeek;
+    }
+
     public class ScheduleTask extends AsyncTask<Void, Void, String> {
 
         @Override
@@ -159,7 +185,7 @@ public class SheduleFragment extends Fragment {
         protected String doInBackground(Void... params) {
             OkHttpClient client = new OkHttpClient();
             Request request = new Request.Builder()
-                    .url(getString(R.string.URL) + "/api/schedule.get")
+                    .url(getString(R.string.URL) + "/site/schedule.get")
                     .build();
             try {
                 Response response = client.newCall(request).execute();
