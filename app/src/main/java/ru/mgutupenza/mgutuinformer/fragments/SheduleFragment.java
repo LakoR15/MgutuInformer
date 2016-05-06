@@ -36,10 +36,8 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
 import ru.mgutupenza.mgutuinformer.R;
-import ru.mgutupenza.mgutuinformer.adapters.SheduleTabFragmentAdapter;
-import ru.mgutupenza.mgutuinformer.model.server.Groups;
+import ru.mgutupenza.mgutuinformer.adapters.ScheduleTabFragmentAdapter;
 import ru.mgutupenza.mgutuinformer.model.server.Schedule;
-import ru.mgutupenza.mgutuinformer.tasks.ScheduleTask;
 import ru.mgutupenza.mgutuinformer.utils.FileIO;
 
 public class SheduleFragment extends Fragment {
@@ -55,6 +53,7 @@ public class SheduleFragment extends Fragment {
     private TabLayout tabSchedule;
     private Spinner spinnerWeekNumber;
     private ViewPager viewPager;
+    ScheduleTabFragmentAdapter adapter;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -74,8 +73,8 @@ public class SheduleFragment extends Fragment {
         spinnerGroup = (Spinner) v.findViewById(R.id.group_spinner);
         tabLayout = (LinearLayout) v.findViewById(R.id.tab_layout);
         tabSchedule = (TabLayout) getActivity().findViewById(R.id.tab_shedule);
-        spinnerWeekNumber = (Spinner) getActivity().findViewById(R.id.spinner_nav);
         viewPager = (ViewPager) v.findViewById(R.id.viewPager);
+        spinnerWeekNumber = (Spinner) getActivity().findViewById(R.id.spinner_nav);
         final ScheduleTask task = new ScheduleTask();
         task.execute();
         choiseGroupButton = (Button) v.findViewById(R.id.apply_change_group_button);
@@ -87,9 +86,11 @@ public class SheduleFragment extends Fragment {
                 tabSchedule.setVisibility(View.VISIBLE);
                 ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayShowTitleEnabled(false);
                 spinnerWeekNumber.setVisibility(View.VISIBLE);
-                SheduleTabFragmentAdapter adapter = new SheduleTabFragmentAdapter(getContext(), getFragmentManager(), getScheduleByGroup(schedules, spinnerGroup.getSelectedItem().toString()));
+                adapter = new ScheduleTabFragmentAdapter(getContext(), getScheduleByGroup(schedules,spinnerGroup.getSelectedItem().toString()));
+                adapter.notifyDataSetChanged();
                 viewPager.setAdapter(adapter);
                 tabSchedule.setupWithViewPager(viewPager);
+
             }
         });
         return v;
@@ -103,6 +104,9 @@ public class SheduleFragment extends Fragment {
         if (tabSchedule != null){
             tabSchedule.setVisibility(View.GONE);
         }
+        adapter = null;
+        viewPager = null;
+        tabSchedule = null;
         ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayShowTitleEnabled(true);
         super.onDestroyView();
     }
