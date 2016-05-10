@@ -10,7 +10,7 @@
             android:title="Новости" />
         <item
             android:id="@+id/nav_shedulle"
-            android:icon="@drawable/ic_shedule"
+            android:icon="@drawable/ic_schedule"
             android:title="Расписание" />
         <item
         android:id="@+id/nav_im"
