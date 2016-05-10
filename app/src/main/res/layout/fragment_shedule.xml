@@ -3,6 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:background="@android:color/background_light"
     tools:context="ru.mgutupenza.mgutuinformer.fragments.SheduleFragment">
 
     <ProgressBar
@@ -18,12 +19,13 @@
         android:id="@+id/change_group_layout"
         android:gravity="center_horizontal"
         android:layout_gravity="center_horizontal"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:visibility="gone"
-        android:layout_above="@+id/progress_bar_schedule"
-        android:layout_centerHorizontal="true">
+        android:visibility="visible"
+        android:layout_centerVertical="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true">
 
         <TextView
             android:layout_width="wrap_content"
@@ -34,13 +36,17 @@
         <Spinner
             android:id="@+id/group_spinner"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="16dp" />
 
         <Button
             android:id="@+id/apply_change_group_button"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="OK"/>
+            android:text="OK"
+            android:textColor="@color/colorPrimary"
+            style="@style/AppTheme.Button"/>
 
     </LinearLayout>
 

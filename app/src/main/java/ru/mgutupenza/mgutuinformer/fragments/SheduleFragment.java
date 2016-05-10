@@ -1,7 +1,5 @@
 package ru.mgutupenza.mgutuinformer.fragments;
 
-
-import android.content.Context;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -87,6 +85,7 @@ public class SheduleFragment extends Fragment {
                 tabSchedule.setVisibility(View.VISIBLE);
                 ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayShowTitleEnabled(false);
                 spinnerWeekNumber.setVisibility(View.VISIBLE);
+
                 adapter = new ScheduleTabFragmentAdapter(getContext(), getScheduleByGroup(schedules,spinnerGroup.getSelectedItem().toString()));
                 adapter.notifyDataSetChanged();
                 viewPager.setAdapter(adapter);

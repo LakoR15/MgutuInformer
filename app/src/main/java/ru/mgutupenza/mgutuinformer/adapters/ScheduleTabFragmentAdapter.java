@@ -7,6 +7,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,12 +31,22 @@ public class ScheduleTabFragmentAdapter extends PagerAdapter {
         Weekday weekday = Weekday.values()[position];
         LayoutInflater inflater = LayoutInflater.from(context);
         ViewGroup layout = (ViewGroup) inflater.inflate(R.layout.fragment_day_tab, container, false);
+
         RecyclerView recyclerView = (RecyclerView) layout.findViewById(R.id.rv_shedule);
-        LinearLayoutManager layoutManager = new LinearLayoutManager(context);
-        recyclerView.setLayoutManager(layoutManager);
-        SheduleRVAdapter adapter = new SheduleRVAdapter(getScheduleSubjectsDay(weekday), context);
-        adapter.notifyDataSetChanged();
-        recyclerView.setAdapter(adapter);
+        TextView textView = (TextView) layout.findViewById(R.id.message_schedule_tab);
+        List<Schedule> schedules = getScheduleSubjectsDay(weekday);
+        if(schedules.isEmpty()){
+            textView.setVisibility(View.VISIBLE);
+            recyclerView.setVisibility(View.GONE);
+        }else {
+            textView.setVisibility(View.GONE);
+            LinearLayoutManager layoutManager = new LinearLayoutManager(context);
+            recyclerView.setLayoutManager(layoutManager);
+            SheduleRVAdapter adapter = new SheduleRVAdapter(schedules, context);
+            adapter.notifyDataSetChanged();
+            recyclerView.setAdapter(adapter);
+        }
+
         container.addView(layout);
         return layout;
     }
