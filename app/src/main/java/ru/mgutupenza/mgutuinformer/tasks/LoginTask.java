@@ -3,6 +3,7 @@ package ru.mgutupenza.mgutuinformer.tasks;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -24,7 +25,7 @@ public class LoginTask extends AsyncTask<Void, Void, String> {
     private AppCompatActivity activity;
     private Context context;
     private String email, password;
-    ProgressDialog progressDialog;
+    private ProgressDialog progressDialog;
 
     public LoginTask(AppCompatActivity activity, Context context, String email, String password) {
         this.activity = activity;

@@ -1,6 +1,8 @@
 package ru.mgutupenza.mgutuinformer;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -43,6 +45,7 @@ public class MainActivity extends AppCompatActivity
     private Users users;
     private MenuItem signIn, signOut;
     private TextView userName, group;
+    private SharedPreferences settings;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,6 +54,8 @@ public class MainActivity extends AppCompatActivity
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        settings = getSharedPreferences("settings", Context.MODE_PRIVATE);
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -68,6 +73,9 @@ public class MainActivity extends AppCompatActivity
         group = (TextView) header.findViewById(R.id.group);
         try {
             users = new Gson().fromJson(FileIO.openString("CurrentUser", getApplicationContext()), Users.class);
+            SharedPreferences.Editor editor = settings.edit();
+            editor.putString("group", users.getGroups().getGroupsName());
+            editor.apply();
             userName.setText(users.getName());
             group.setText(users.getGroups().getGroupsName());
             signIn.setVisible(false);
@@ -133,6 +141,9 @@ public class MainActivity extends AppCompatActivity
             userName.setText("");
             group.setText("");
             FileIO.saveString("CurrentUser", "", getApplicationContext());
+            SharedPreferences.Editor editor = settings.edit();
+            editor.remove("group");
+            editor.apply();
 
         } else if (id == R.id.nav_im) {
             fragmentTransaction.replace(R.id.container, chatFragment, ChatFragment.TAG);
