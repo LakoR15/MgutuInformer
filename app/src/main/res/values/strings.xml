@@ -35,6 +35,6 @@
     <string name="thursday">Четверг</string>
     <string name="friday">Пятница</string>
     <string name="saturday">Суббота</string>
-    <string name="change_group">Выбрать группу</string>
-    <string name="choise_group">Выберите группу в меню</string>
+    <string name="change_group">Изменить группу</string>
+    <!--<string name="choise_group">Выберите группу в меню</string>-->
 </resources>
