@@ -40,6 +40,7 @@
         <item
             android:id="@+id/menu_sign_out"
             android:title="Выход"
+            android:icon="@drawable/ic_exit"
             android:visible="false"/>
 
     </group>
