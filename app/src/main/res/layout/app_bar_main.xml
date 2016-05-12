@@ -24,8 +24,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:visibility="gone"
-                android:entries="@array/weeks"
-                app:theme="@style/ThemeOverlay.AppCompat.Light" />
+                android:spinnerMode="dropdown"
+                android:popupTheme="@android:color/white" />
 
         </android.support.v7.widget.Toolbar>
 
@@ -37,7 +37,9 @@
             app:tabMode="scrollable"
             android:elevation="2dp"
             android:background="@color/colorPrimary"
-            android:visibility="gone">
+            android:visibility="gone"
+            app:tabTextColor="#424242"
+            app:tabSelectedTextColor="@android:color/white">
         </android.support.design.widget.TabLayout>
 
 

@@ -67,8 +67,8 @@ public class MainActivity extends AppCompatActivity
         navigationView.setNavigationItemSelectedListener(this);
         View header = navigationView.getHeaderView(0);
         Menu menu = navigationView.getMenu();
-        signIn = menu.findItem(R.id.menu_sign_in_up);
-        signOut = menu.findItem(R.id.menu_sign_out);
+//        signIn = menu.findItem(R.id.menu_sign_in_up);
+//        signOut = menu.findItem(R.id.menu_sign_out);
         userName = (TextView) header.findViewById(R.id.user_name);
         group = (TextView) header.findViewById(R.id.group);
         try {
@@ -132,21 +132,21 @@ public class MainActivity extends AppCompatActivity
 
             fragmentTransaction.replace(R.id.container, sheduleFragment, SheduleFragment.TAG);
 
-        } else if(id == R.id.menu_sign_in_up) {
-            startActivity(new Intent(this, StartActivity.class));
-
-        } else if(id == R.id.menu_sign_out) {
-            signIn.setVisible(true);
-            signOut.setVisible(false);
-            userName.setText("");
-            group.setText("");
-            FileIO.saveString("CurrentUser", "", getApplicationContext());
-            SharedPreferences.Editor editor = settings.edit();
-            editor.remove("group");
-            editor.apply();
-
-        } else if (id == R.id.nav_im) {
-            fragmentTransaction.replace(R.id.container, chatFragment, ChatFragment.TAG);
+//        } else if(id == R.id.menu_sign_in_up) {
+//            startActivity(new Intent(this, StartActivity.class));
+//
+//        } else if(id == R.id.menu_sign_out) {
+//            signIn.setVisible(true);
+//            signOut.setVisible(false);
+//            userName.setText("");
+//            group.setText("");
+//            FileIO.saveString("CurrentUser", "", getApplicationContext());
+//            SharedPreferences.Editor editor = settings.edit();
+//            editor.remove("group");
+//            editor.apply();
+//
+//        } else if (id == R.id.nav_im) {
+//            fragmentTransaction.replace(R.id.container, chatFragment, ChatFragment.TAG);
 //
 //        } else if (id == R.id.nav_group) {
 //

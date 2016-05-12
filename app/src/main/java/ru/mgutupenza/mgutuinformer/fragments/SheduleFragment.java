@@ -78,6 +78,9 @@ public class SheduleFragment extends Fragment {
         tabSchedule = (TabLayout) getActivity().findViewById(R.id.tab_shedule);
         viewPager = (ViewPager) v.findViewById(R.id.viewPager);
         spinnerWeekNumber = (Spinner) getActivity().findViewById(R.id.spinner_nav);
+        ArrayAdapter<String> spinnerAdapter = new ArrayAdapter<String>(getContext(),R.layout.spinner_item, getResources().getStringArray(R.array.weeks));
+        spinnerAdapter.setDropDownViewResource(R.layout.spinner_dropdawn_item);
+        spinnerWeekNumber.setAdapter(spinnerAdapter);
         final ScheduleTask task = new ScheduleTask();
         task.execute();
         choiseGroupButton = (Button) v.findViewById(R.id.apply_change_group_button);
