@@ -78,7 +78,7 @@ public class SheduleFragment extends Fragment {
         tabSchedule = (TabLayout) getActivity().findViewById(R.id.tab_shedule);
         viewPager = (ViewPager) v.findViewById(R.id.viewPager);
         spinnerWeekNumber = (Spinner) getActivity().findViewById(R.id.spinner_nav);
-        ArrayAdapter<String> spinnerAdapter = new ArrayAdapter<String>(getContext(),R.layout.spinner_item, getResources().getStringArray(R.array.weeks));
+        final ArrayAdapter<String> spinnerAdapter = new ArrayAdapter<String>(getContext(),R.layout.spinner_item, getResources().getStringArray(R.array.weeks));
         spinnerAdapter.setDropDownViewResource(R.layout.spinner_dropdawn_item);
         spinnerWeekNumber.setAdapter(spinnerAdapter);
         final ScheduleTask task = new ScheduleTask();
@@ -87,8 +87,13 @@ public class SheduleFragment extends Fragment {
         choiseGroupButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                showSchedule(spinnerGroup.getSelectedItem().toString());
-                saveGroup(spinnerGroup.getSelectedItem().toString());
+                if (!spinnerGroup.getAdapter().isEmpty()){
+                    showSchedule(spinnerGroup.getSelectedItem().toString());
+                    saveGroup(spinnerGroup.getSelectedItem().toString());
+                }else {
+                    Toast.makeText(getContext(), "Не выбрана группа", Toast.LENGTH_SHORT).show();
+                }
+
             }
         });
         spinnerWeekNumber.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -112,7 +117,7 @@ public class SheduleFragment extends Fragment {
         changeGroupLayout.setVisibility(View.GONE);
         tabLayout.setVisibility(View.VISIBLE);
         tabSchedule.setVisibility(View.VISIBLE);
-        ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayShowTitleEnabled(false);
+        ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle(group);
         spinnerWeekNumber.setVisibility(View.VISIBLE);
         adapter = new ScheduleTabFragmentAdapter(getContext(), getScheduleByWeek(getScheduleByGroup(schedules, group), spinnerWeekNumber.getSelectedItem().toString()));
         adapter.notifyDataSetChanged();
@@ -131,7 +136,7 @@ public class SheduleFragment extends Fragment {
         adapter = null;
         viewPager = null;
         tabSchedule = null;
-        ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayShowTitleEnabled(true);
+        ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle(R.string.shedule);
         super.onDestroyView();
     }
 
@@ -154,7 +159,7 @@ public class SheduleFragment extends Fragment {
             if (tabLayout != null) {
                 tabLayout.setVisibility(View.GONE);
             }
-            ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayShowTitleEnabled(true);
+            ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle(R.string.shedule);
             SharedPreferences.Editor editor = settings.edit();
             editor.remove("group");
             editor.apply();
@@ -227,7 +232,7 @@ public class SheduleFragment extends Fragment {
         @Override
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
-            if (!s.equals("")) {
+            if (!s.equals("") && !s.equals("[]")) {
                 FileIO.saveString("Schedule", s, getContext());
                 Type itemsListType = new TypeToken<List<Schedule>>() {
                 }.getType();
@@ -236,9 +241,10 @@ public class SheduleFragment extends Fragment {
                 String str = FileIO.openString("Schedule", getContext());
                 Type itemsListType = new TypeToken<List<Schedule>>() {
                 }.getType();
-                schedules = new Gson().fromJson(s, itemsListType);
+                schedules = new Gson().fromJson(str, itemsListType);
                 Toast.makeText(getActivity().getApplicationContext(), "Проверьте соединение с интернетом", Toast.LENGTH_SHORT).show();
             }
+
             progressBar.setVisibility(View.GONE);
             changeGroupLayout.setVisibility(View.VISIBLE);
             ArrayAdapter<String> adapter = new ArrayAdapter(getContext(), android.R.layout.simple_spinner_item, getGroupsName(schedules));
@@ -246,6 +252,7 @@ public class SheduleFragment extends Fragment {
             if (settings.contains("group") && !settings.getString("group", "").equals("")) {
                 showSchedule(settings.getString("group", ""));
             }
+
         }
     }
 }
