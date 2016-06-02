@@ -132,19 +132,19 @@ public class MainActivity extends AppCompatActivity
 
             fragmentTransaction.replace(R.id.container, sheduleFragment, SheduleFragment.TAG);
 
-//        } else if(id == R.id.menu_sign_in_up) {
-//            startActivity(new Intent(this, StartActivity.class));
-//
-//        } else if(id == R.id.menu_sign_out) {
-//            signIn.setVisible(true);
-//            signOut.setVisible(false);
-//            userName.setText("");
-//            group.setText("");
-//            FileIO.saveString("CurrentUser", "", getApplicationContext());
-//            SharedPreferences.Editor editor = settings.edit();
-//            editor.remove("group");
-//            editor.apply();
-//
+        } else if(id == R.id.menu_sign_in_up) {
+            startActivity(new Intent(this, StartActivity.class));
+
+        } else if(id == R.id.menu_sign_out) {
+            signIn.setVisible(true);
+            signOut.setVisible(false);
+            userName.setText("");
+            group.setText("");
+            FileIO.saveString("CurrentUser", "", getApplicationContext());
+            SharedPreferences.Editor editor = settings.edit();
+            editor.remove("group");
+            editor.apply();
+
 //        } else if (id == R.id.nav_im) {
 //            fragmentTransaction.replace(R.id.container, chatFragment, ChatFragment.TAG);
 //

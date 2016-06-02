@@ -28,21 +28,21 @@
 
     </group>
 
-    <!--<group-->
-        <!--android:id="@+id/menu_bottom"-->
-        <!--android:checkableBehavior="none">-->
+    <group
+        android:id="@+id/menu_bottom"
+        android:checkableBehavior="none">
 
-        <!--<item-->
-            <!--android:id="@+id/menu_sign_in_up"-->
-            <!--android:title="Регистрация/Вход"-->
-            <!--android:icon="@drawable/ic_auth"/>-->
+        <item
+            android:id="@+id/menu_sign_in_up"
+            android:title="Регистрация/Вход"
+            android:icon="@drawable/ic_auth"/>
 
-        <!--<item-->
-            <!--android:id="@+id/menu_sign_out"-->
-            <!--android:title="Выход"-->
-            <!--android:icon="@drawable/ic_exit"-->
-            <!--android:visible="false"/>-->
+        <item
+            android:id="@+id/menu_sign_out"
+            android:title="Выход"
+            android:icon="@drawable/ic_exit"
+            android:visible="false"/>
 
-    <!--</group>-->
+    </group>
 </menu>
 

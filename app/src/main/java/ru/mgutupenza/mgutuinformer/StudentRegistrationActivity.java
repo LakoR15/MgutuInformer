@@ -31,7 +31,7 @@ public class StudentRegistrationActivity extends AppCompatActivity {
         initToolbar();
         final Spinner spinner = (Spinner) findViewById(R.id.group);
 
-        ArrayAdapter<?> adapter = ArrayAdapter.createFromResource(this, R.array.catlist, R.layout.spinner_item);
+        ArrayAdapter<?> adapter = ArrayAdapter.createFromResource(this, R.array.group_list, R.layout.spinner_item_group);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
         if (spinner != null) {

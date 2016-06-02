@@ -6,7 +6,7 @@
     <string name="registration">Регистрация</string>
     <string name="login">Вход</string>
 
-    <string-array name="catlist">
+    <string-array name="group_list">
         <item>12ИС1</item>
         <item>13ИС1</item>
         <item>14ИС1</item>
